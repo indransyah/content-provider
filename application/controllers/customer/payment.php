@@ -64,7 +64,7 @@ class Payment extends CI_Controller {
             'payment_date' => date('Y-m-d'),
             'payment_total' => $this->input->post('jumlah'),
             'payment_keterangan' => $this->input->post('keterangan'),
-            'payment_status' => 'sudah dibayar',
+            'payment_status' => 'belum diverifikasi',
             );
         $this->payment_model->add($data);
 

@@ -72,7 +72,7 @@
                   <form method="POST" action="<?=base_url('dashboard/pembayaran/detail/'.$payment->payment_id) ?>">
                   <div class="col-md-4">
                     <select name="status" class="form-control">
-                      <option value="sudah dibayar" <?php if ($payment->payment_status=='sudah dibayar') echo 'selected' ?>>Sudah Dibayar</option>
+                      <option value="belum diverifikasi" <?php if ($payment->payment_status == 'belum diverifikasi') echo 'selected' ?>>Belum Diverifikasi</option>
                       <option value="lunas" <?php if ($payment->payment_status=='lunas') echo 'selected' ?>>LUNAS</option>
                     </select>
                   </div>
