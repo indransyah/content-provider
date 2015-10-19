@@ -29,6 +29,7 @@
             <div class="box-body">
               <div class="form-group">
                 <label>Order</label> <br>
+                <?=form_error('order'); ?>
                 <!-- Single button -->
                 <div class="btn-group">
                   <select name="order" class="form-control">
