@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 16, 2015 at 06:43 AM
+-- Generation Time: Oct 19, 2015 at 09:52 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.13
 
@@ -97,6 +97,18 @@ CREATE TABLE `jobs` (
 INSERT INTO `jobs` (`job_id`, `order_id`, `kreator_id`, `job_status`) VALUES
 (2, 2, 1, 'penerimaan');
 
+--
+-- Triggers `jobs`
+--
+DELIMITER $$
+CREATE TRIGGER `creatorselesaimengerjakan` AFTER UPDATE ON `jobs` FOR EACH ROW BEGIN
+IF NEW.`job_status` = 'selesai' THEN
+UPDATE `order` SET `order`.`order_status` = 'pengerjaan' WHERE `order`.`order_id` = NEW.`order_id`;
+END IF;
+END
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -111,7 +123,7 @@ CREATE TABLE `konten` (
   `konten_file` varchar(50) NOT NULL,
   `konten_status` varchar(20) NOT NULL,
   `konten_keterangan` text NOT NULL,
-  `order_id` int(5) NOT NULL
+  `job_id` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -161,8 +173,7 @@ CREATE TABLE `order` (
 
 INSERT INTO `order` (`order_id`, `pemesan_id`, `paket_id`, `order_date`, `order_jumlah`, `order_total`, `order_keterangan`, `order_status`) VALUES
 (2, 1, 5, '2015-10-13 00:00:00', 20, 0, 'paket harus bla bla bla', 'pengerjaan'),
-(3, 2, 5, '2015-10-13 00:00:00', 20, 0, 'paket harus bla bla bla', 'proses pembayaran'),
-(4, 1, 7, '2015-10-13 00:00:00', 2, 0, 'bla bla bla', 'proses pembayaran'),
+(4, 1, 7, '2015-10-13 00:00:00', 2, 0, 'bla bla bla', 'pengerjaan'),
 (5, 1, 6, '2015-10-13 00:00:00', 2, 2, 'bla bla bla', 'proses pembayaran'),
 (6, 1, 6, '2015-10-13 00:00:00', 3, 900000, 'ok', 'proses pembayaran');
 
@@ -215,6 +226,18 @@ INSERT INTO `payment` (`payment_id`, `order_id`, `payment_date`, `payment_total`
 (8, 2, '2015-10-14 00:00:00', 100000, 'ke rekening bla bla bla', 'lunas');
 
 --
+-- Triggers `payment`
+--
+DELIMITER $$
+CREATE TRIGGER `customerkonfirmasipembayaran` AFTER UPDATE ON `payment` FOR EACH ROW BEGIN
+IF NEW.`payment_status` = 'lunas' THEN
+UPDATE `order` SET `order`.`order_status` = 'pengerjaan' WHERE `order`.`order_id` = NEW.`order_id`;
+END IF;
+END
+$$
+DELIMITER ;
+
+--
 -- Indexes for dumped tables
 --
 
@@ -240,13 +263,16 @@ ALTER TABLE `customer`
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
-  ADD PRIMARY KEY (`job_id`);
+  ADD PRIMARY KEY (`job_id`),
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `kreator_id` (`kreator_id`);
 
 --
 -- Indexes for table `konten`
 --
 ALTER TABLE `konten`
-  ADD PRIMARY KEY (`konten_id`);
+  ADD PRIMARY KEY (`konten_id`),
+  ADD KEY `order_id` (`job_id`);
 
 --
 -- Indexes for table `kreator`
@@ -259,7 +285,9 @@ ALTER TABLE `kreator`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `pemesan_id` (`pemesan_id`);
+  ADD KEY `pemesan_id` (`pemesan_id`),
+  ADD KEY `pemesan_id_2` (`pemesan_id`),
+  ADD KEY `paket_id` (`paket_id`);
 
 --
 -- Indexes for table `paket`
@@ -271,7 +299,8 @@ ALTER TABLE `paket`
 -- Indexes for table `payment`
 --
 ALTER TABLE `payment`
-  ADD PRIMARY KEY (`payment_id`);
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -322,6 +351,36 @@ ALTER TABLE `paket`
 --
 ALTER TABLE `payment`
   MODIFY `payment_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`),
+  ADD CONSTRAINT `jobs_ibfk_2` FOREIGN KEY (`kreator_id`) REFERENCES `kreator` (`kreator_id`);
+
+--
+-- Constraints for table `konten`
+--
+ALTER TABLE `konten`
+  ADD CONSTRAINT `konten_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`);
+
+--
+-- Constraints for table `order`
+--
+ALTER TABLE `order`
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`pemesan_id`) REFERENCES `customer` (`customer_id`),
+  ADD CONSTRAINT `order_ibfk_2` FOREIGN KEY (`paket_id`) REFERENCES `paket` (`paket_id`);
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
