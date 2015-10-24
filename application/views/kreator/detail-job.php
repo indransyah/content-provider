@@ -15,6 +15,12 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
+        <?php if ($this->session->flashdata('success')) : ?>
+        <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('danger')) : ?>
+        <div class="alert alert-danger"><?php echo $this->session->flashdata('danger'); ?></div>
+        <?php endif; ?>
         <div class="box box-solid box-warning">
           <div class="box-header">
             <h3 class="box-title">Detail Job</h3>
@@ -29,42 +35,61 @@
               <tr>
                 <td><strong>Jobs ID</strong></td>
                 <td><strong>:</strong></td> 
-                <td>OR000011119</td>
+                <td><?=$job->job_id ?></td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td><strong>Date</strong></td>
                 <td><strong>:</strong></td>
                 <td> 23-08-2015</td>
-              </tr>
+              </tr> -->
               <tr>
                 <td><strong>Paket</strong></td>
                 <td><strong>:</strong></td>
-                <td> A2</td>
-              </tr>
-              <tr>
-                <td><strong>Jumlah</strong></td>
-                <td><strong>:</strong></td> 
-                <td>2</td>
+                <td><?=$job->paket_nama ?></td>
               </tr>
               <tr>
                 <td><strong>Keterangan</strong></td>
                 <td><strong>:</strong> </td>
-                <td> konten dengan topik smartphone terbaru tahun 2015 dan review aplikasi android </td>
+                <td><?=$job->order_keterangan ?></td>
+              </tr>
+              <tr>
+                <td><strong>Jumlah</strong></td>
+                <td><strong>:</strong></td> 
+                <td><?=$job->order_jumlah ?></td>
+              </tr>
+              <tr>
+                <td><strong>Total</strong></td>
+                <td><strong>:</strong></td> 
+                <td><?=rupiah($job->order_total) ?></td>
               </tr>
               <tr>
                 <td><strong>Gaji</strong></td>
                 <td><strong>:</strong></td> 
-                <td> Rp100000</td>
+                <td><?=(rupiah($job->order_total*($job->job_keuntungan/100))).' ('.$job->job_keuntungan.'% dari '.rupiah($job->order_total).')' ?></td>
               </tr>
             </table>
           </div><!-- /.box-body -->
+          <?php if($job->job_status == 'belum diverifikasi') : ?>
           <div class="box-footer">
             <div class="row">
               <div class="col-xs-2 pull-right">  
-                <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-rocket"></i>  Ambil</button>
+                <a class="btn btn-success btn-flat" href="<?=base_url('kreator/job/terima/'.$job->job_id) ?>"></i>  Terima</a>
+                <a class="btn btn-danger btn-flat" href="<?=base_url('kreator/job/tolak/'.$job->job_id) ?>"></i>  Tolak</a>
               </div>
             </div>
           </div>
+          <?php endif; ?>
+          <?php if($job->job_status == 'diterima') : ?>
+          <div class="box-footer">
+            <div class="row">
+              <div class="col-xs-2 pull-right">  
+                progress
+                <a class="btn btn-primary btn-flat" href="<?=base_url('kreator/job/progress/'.$job->job_id) ?>"></i>  Submit</a><!--  atau <a class="btn btn-success btn-flat" href="<?=base_url('kreator/job/progress/'.$job->job_id) ?>"></i> Kirim Konten</a> <i>(jika sudah selesai)</i> -->
+              </div>
+            </div>
+            <br>
+          </div>
+          <?php endif; ?>
         </div><!-- /.box -->
       </div>
     </div>
@@ -79,32 +104,32 @@
               <tr>
                 <td><strong>Nama Paket</strong></td>
                 <td><strong>:</strong></td>
-                <td>Paket A2</td>
+                <td><?=$job->paket_nama ?></td>
               </tr>
               <tr>
                 <td><strong>Jenis Konten</strong></td>
                 <td><strong>:</strong></td>
-                <td>Teks</td>
+                <td><?=$job->konten_jenis ?></td>
               </tr>
               <tr>
                 <td><strong>Jumlah Konten</strong></td>
                 <td><strong>:</strong></td>
-                <td>10</td>
+                <td><?=$job->paket_jumlah ?></td>
               </tr>
               <tr>
                 <td><strong>Lama Pengerjaan</strong></td>
                 <td><strong>:</strong></td>
-                <td>3 Hari</td>
+                <td><?=$job->paket_jangkawaktu ?></td>
               </tr>
               <tr>
                 <td><strong>Deskripsi</strong></td>
                 <td><strong>:</strong></td>
-                <td>Kami menyediakan konten berupa teks untuk solusi atas kebutuhan konten website anda, sehingga anda dapat mengupdate konten website secara berkala dan teratur.</td>
+                <td><?=$job->paket_deskripsi ?></td>
               </tr>
               <tr>
                 <td><strong>Harga</strong></td>
                 <td><strong>:</strong></td>
-                <td>Rp50000</td>
+                <td><?=rupiah($job->paket_harga) ?></td>
               </tr>
             </table>
           </div><!-- /.box-body -->

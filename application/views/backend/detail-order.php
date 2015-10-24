@@ -74,26 +74,34 @@ Right side column. Contains the navbar and content of the page -->
                   <td> <?=ucwords($order->order_status) ?></td>
                 </tr>
               <?php if($order->order_status == 'pengerjaan') : ?>
+              <form method="POST" action="<?=base_url('dashboard/job/add/'.$order->order_id) ?>">
               <tr>
                 <td><strong>Tambahkan ke</strong></td>
                 <td><strong>:</strong></tf> 
                 <td>
-                  <?php if(count($jobBasedOnOrderId)>0) : ?>
-                  <?=$jobBasedOnOrderId->kreator_nama ?>
-                  <?php else : ?>
-                  <form method="POST" action="<?=base_url('dashboard/job/add/'.$order->order_id) ?>">
                   <select name="kreator" class="form-control">
                     <?php foreach($kreator as $value) : ?>
                     <option value="<?=$value->kreator_id ?>"><?=$value->kreator_nama ?></option>
                     <?php endforeach; ?>
                   </select>
-                  <br>
-                  <button type="submit" class="btn btn-success">Tambah</button>
-                  </form>
-                <?php endif; ?>
                 </td>
               </tr>
-
+              <tr>
+                <td><strong>Keuntungan</strong></td>
+                <td><strong>:</strong></tf> 
+                <td>
+                  <input type="text" name="keuntungan" class="form-control" placeholder="dalam %">
+                  <p><i>jika tidak diisi keuntungan 10%</i></p>
+                </td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></tf> 
+                <td>
+                  <button type="submit" class="btn btn-success">Tambah</button>
+                </td>
+              </tr>
+              </form>
               <?php endif; ?>
               </table>
             </div><!-- /.box-body -->

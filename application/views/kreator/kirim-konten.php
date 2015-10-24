@@ -1,4 +1,4 @@
-<!-- Right side column. Contains the navbar and content of the page -->
+Right side column. Contains the navbar and content of the page -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -15,37 +15,55 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
+        <?php if ($this->session->flashdata('success')) : ?>
+        <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('danger')) : ?>
+        <div class="alert alert-danger"><?php echo $this->session->flashdata('danger'); ?></div>
+        <?php endif; ?>
+        <?php if ($error) : ?>
+        <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
         <div class="box box-solid box-warning">
           <div class="box-header">
             <h3 class="box-title">Kirim Konten</h3>
           </div><!-- /.box-header -->
           <div class="box-body no-padding">
-            <form role="form">
-                  <div class="box-body">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Job ID</label>
-                      <select class="form-control">
-                        <option>JOB00000011</option>
-                        <option>JOB00000023</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">Keterangan</label>
-                      <textarea class="form-control" rows="3" placeholder="Keterangan..."></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputFile">File input</label>
-                      <input type="file" id="exampleInputFile">
-                    </div>
-                  </div><!-- /.box-body -->
+            <?php echo form_open_multipart('kreator/konten/kirim');?>
+              <div class="box-body">
+                <div class="form-group">
+                  <label>Job ID</label>
+                  <?php echo form_error('job'); ?>
+                  <select name="job" class="form-control">
+                    <?php foreach($job as $value) : ?>
+                    <option value="<?=$value->job_id?>" <?php if (set_value('job') == $value->job_id)  echo 'selected'; ?>><?=$value->job_id?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nama</label>
+                <?php echo form_error('nama'); ?>
+                <input name="nama" class="form-control" placeholder="Nama" value="<?php echo set_value('nama'); ?>">
+              </div>
+              <div class="form-group">
+                <label>Keterangan</label>
+                <?php echo form_error('keterangan'); ?>
+                <textarea name="keterangan" class="form-control" rows="3" placeholder="Keterangan..."><?php echo set_value('keterangan'); ?></textarea>
+              </div>
+              <div class="form-group">
+                <label>File</label>
+                <?php echo form_error('file'); ?>
+                <input name="file" type="file">
+              </div>
+            </div><!-- /.box-body -->
 
-                  <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                </form>
-          </div><!-- /.box-body -->
-        </div><!-- /.box -->
-      </div>
+            <div class="box-footer">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
     </div>
-  </section><!-- /.content -->
-</div><!-- /.content-wrapper -->
+  </div>
+</section><!-- /.content -->
+</div><!-- /.content-wrapper

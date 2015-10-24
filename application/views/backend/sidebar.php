@@ -35,7 +35,7 @@
         </a>
         <ul class="treeview-menu">
           <li class="<?php if ($this->uri->segment(2)=='job' AND $this->uri->segment(3)=='view') echo 'active'; ?>"><a href="<?php echo base_url('dashboard/job/view'); ?>"><i class="fa fa-server"></i> Lihat Job</a></li>
-          <li class="<?php if ($this->uri->segment(2)=='job' AND $this->uri->segment(3)=='add') echo 'active'; ?>"><a href="<?php echo base_url('dashboard/job/add'); ?>"><i class="fa fa-user-plus"></i> Tambah Job</a></li>
+          <!-- <li class="<?php if ($this->uri->segment(2)=='job' AND $this->uri->segment(3)=='add') echo 'active'; ?>"><a href="<?php echo base_url('dashboard/job/add'); ?>"><i class="fa fa-user-plus"></i> Tambah Job</a></li> -->
           <li class="<?php if ($this->uri->segment(2)=='job' AND $this->uri->segment(3)=='view') echo 'active'; ?>"><a href="#"><i class="fa fa-server"></i> Konten</a></li>
         </ul>
       </li>
@@ -53,7 +53,7 @@
         </a>
         <ul class="treeview-menu">
           <li class="<?php if ($this->uri->segment(2)=='kreator' AND $this->uri->segment(3)=='view') echo 'active'; ?>"><a href="<?php echo base_url('dashboard/kreator/view'); ?>"><i class="fa fa-server"></i> Lihat Kreator</a></li>
-          <li class="<?php if ($this->uri->segment(2)=='kreator' AND $this->uri->segment(3)=='add') echo 'active'; ?>"><a href="<?php echo base_url('dashboard/kreator/add'); ?>"><i class="fa fa-user-plus"></i> Tambah Kreator</a></li>
+          <!-- <li class="<?php if ($this->uri->segment(2)=='kreator' AND $this->uri->segment(3)=='add') echo 'active'; ?>"><a href="<?php echo base_url('dashboard/kreator/add'); ?>"><i class="fa fa-user-plus"></i> Tambah Kreator</a></li> -->
         </ul>
       </li>
       <li class="<?php if ($this->uri->segment(2)=='pembayaran') echo 'active'; ?> treeview">

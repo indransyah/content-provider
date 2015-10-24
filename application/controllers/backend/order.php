@@ -10,50 +10,44 @@ class Order extends CI_Controller {
         if (!$this->session->userdata('logged_in')) {
             redirect('dashboard/login');
         }
+
+        // Load model & library yang akan digunakan
         $this->load->model('order_model');
         $this->load->model('kreator_model');
         $this->load->model('job_model');
-
     }
 
+    // Mengarahkan pada halaman order
     public function index() {
-        redirect('dashboard/order/view');
+        return redirect('dashboard/order/view');
     }
 
+    // Menampilkan halaman order
     public function view() {
         $data['order'] = $this->order_model->view();
-        //Pagination
-        // $config['base_url'] = base_url('dashboard/order/view/');
-        // $config['per_page'] = 5;
-        // $value = $config['per_page'];
-        // $page = ($this->uri->segment(4)) ? (int) $this->uri->segment(4) : 1;
-        // $offset = ($page - 1) * $value;
-        // if ($this->input->post()) {
-        //     $keyword = $this->input->post('keyword');
-        //     $field = 'user_' . $this->input->post('field');
-        //     $config['total_rows'] = $this->user_model->count($keyword, $field);
-        //     $data['users'] = $this->user_model->view($keyword, $field, $value, $offset);
-        // } else {
-        //     $config['total_rows'] = $this->user_model->count(NULL, NULL);
-        //     $data['users'] = $this->user_model->view(NULL, NULL, $value, $offset);
-        // }
-        // $this->pagination->initialize($config); //Some config in application/config/pagination.php
-        // $data['pagination'] = $this->pagination->create_links();
-
-        //Template
         $this->template->backend('order', $data);
     }
 
+    // Menampilkan halaman detail order
     public function detail($id) {
+        // Cek apakah URL terdapat id order atau tidak
         if (is_null($id)) {
+            // Jika tidak ada maka redirect ke halaman order
             return redirect('dashboard/order/view');
         }
+
+        // Jika ada ambil data kreator dan order
         $data['kreator'] = $this->kreator_model->view();
         $data['order'] = $this->order_model->get($id);
+
+        // Cek apakah data order kosong atau tidak
         if (count($data['order'])==0) {
+            // JIka kosong arahkan kembali ke halaman order dengan pesan error
             $this->session->set_flashdata('danger', 'Data tidak ditemukan');
             return redirect('dashboard/order/view');
         }
+
+        // jika tidak kosong maka tampilkan halaman detail order dengan form penambahan job di dalamnya
         $data['jobBasedOnOrderId'] = $this->job_model->getJobBasedOnOrderId($id);
         $this->template->backend('detail-order', $data);
     }
