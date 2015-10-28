@@ -7,7 +7,7 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">Dashboard</li>
+      <li class="active">Konten</li>
     </ol>
   </section>
 
@@ -15,170 +15,48 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
-        <div class="box box-info">
-          <div class="box-header">
-            <h3 class="box-title">Lihat Konten</h3>
-          </div><!-- /.box-header -->
-          <div class="box-body">
-            <table id="example2" class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Order ID</th>
-                  <th>Tanggal</th>
-                  <th>Paket</th>
-                  <th>Jumlah</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Trident</td>
-                  <td>Internet
-                    Explorer 4.0</td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>
-                      <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0</td>
-                      <td>Win 95+</td>
-                      <td>5</td>
-                      <td>
-                        <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Trident</td>
-                      <td>Internet
-                        Explorer 5.5</td>
-                        <td>Win 95+</td>
-                        <td>5.5</td>
-                        <td><button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Trident</td>
-                        <td>Internet
-                          Explorer 6</td>
-                          <td>Win 98+</td>
-                          <td>6</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Trident</td>
-                          <td>Internet Explorer 7</td>
-                          <td>Win XP SP2+</td>
-                          <td>7</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Trident</td>
-                          <td>AOL browser (AOL desktop)</td>
-                          <td>Win XP</td>
-                          <td>6</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Gecko</td>
-                          <td>Firefox 1.0</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td>1.7</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Gecko</td>
-                          <td>Firefox 1.5</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td>1.8</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Gecko</td>
-                          <td>Firefox 2.0</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td>1.8</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Gecko</td>
-                          <td>Firefox 3.0</td>
-                          <td>Win 2k+ / OSX.3+</td>
-                          <td>1.9</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Gecko</td>
-                          <td>Camino 1.0</td>
-                          <td>OSX.2+</td>
-                          <td>1.8</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Gecko</td>
-                          <td>Camino 1.5</td>
-                          <td>OSX.3+</td>
-                          <td>1.8</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Gecko</td>
-                          <td>Netscape 7.2</td>
-                          <td>Win 95+ / Mac OS 8.6-9.2</td>
-                          <td>1.7</td>
-                          <td>
-                            <button class="btn btn-block btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button>
-                          </td>
-                        </tr>
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <th>Order ID</th>
-                          <th>Tanggal</th>
-                          <th>Paket</th>
-                          <th>Jumlah</th>
-                          <th>Action</th>
-                        </tr>
-                      </tfoot>
-                    </table>
-                  </div><!-- /.box-body -->
-                </div><!-- /.box -->
-              </div><!-- /.col -->
-            </div><!-- /.row -->
-          </section><!-- /.content -->
-        </div>
-        <!-- page script -->
-        <script type="text/javascript">
-        $(function () {
-          $("#example1").dataTable();
-          $('#example2').dataTable({
-            "bPaginate": true,
-            "bLengthChange": false,
-            "bFilter": false,
-            "bSort": true,
-            "bInfo": true,
-            "bAutoWidth": false
-          });
-        });
-      </script> 
+        <?php if ($this->session->flashdata('success')) : ?>
+        <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
+      <?php endif; ?>
+      <?php if ($this->session->flashdata('danger')) : ?>
+      <div class="alert alert-danger"><?php echo $this->session->flashdata('danger'); ?></div>
+    <?php endif; ?>
+    <div class="box box-warning">
+      <div class="box-header">
+        <h3 class="box-title">Konten</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <table id="table" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Order ID</th>
+              <th>Nama</th>
+              <th>Keterangan</th>
+              <th>File</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach($konten as $value): ?>
+            <tr>
+              <td><?=$value->konten_id?></td>
+              <td><a href="<?=base_url('customer/order/detail/'.$value->order_id) ?>"><?=$value->order_id?></a></td>
+              <td><?=$value->konten_nama?></td>
+              <td><?=$value->konten_keterangan?></td>
+              <td><?=$value->konten_file?></td>
+              <td>
+                <a href="<?=base_url('uploads/'.$value->konten_file) ?>" class="btn btn-block btn-info btn-flat"><i class="fa fa-download"></i></a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div><!-- /.box-body -->
+    </div><!-- /.box -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+</section><!-- /.content -->
+</div><!-- /.content-wrapper -->
+
+

@@ -30,7 +30,7 @@
         </a>
         <ul class="treeview-menu">
           <li class="active"><a href="<?php echo base_url('kreator/job/view'); ?>"><i class="fa fa-server"></i> Lihat Job</a></li>
-          <!-- <li class="active"><a href="#"><i class="fa  fa-desktop"></i> My Job</a></li> -->
+          <li class="active"><a href="<?=base_url('kreator/gaji/view')?>"><i class="fa  fa-desktop"></i>Lihat Gaji</a></li>
         </ul>
       </li>
       <li>
@@ -38,7 +38,8 @@
           <i class="fa fa-gift"></i> <span>Konten</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-          <li class="active"><a href="<?php echo base_url('kreator/konten/kirim'); ?>"><i class="fa fa-cloud"></i> Kirim Konten Konten </a></li>
+          <li class="active"><a href="<?php echo base_url('kreator/konten/submit'); ?>"><i class="fa fa-cloud"></i> Kirim Konten </a></li>
+          <li class="active"><a href="<?php echo base_url('kreator/konten/view'); ?>"><i class="fa fa-eye"></i> Lihat Konten </a></li>
         </ul>
       </li>
       <li>

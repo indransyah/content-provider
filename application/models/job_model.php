@@ -9,6 +9,11 @@ class Job_model extends CI_Model {
         return $this->db->insert('jobs', $data);
     }
 
+    function update($id, $data) {
+        $this->db->where('job_id', $id);
+        return $this->db->update('jobs', $data);
+    }
+
     function view() {
     	$this->db->join('kreator', 'jobs.kreator_id = kreator.kreator_id');
     	$this->db->join('order', 'order.order_id = jobs.order_id');

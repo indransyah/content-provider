@@ -19,14 +19,19 @@ class Order_model extends CI_Model {
         if (!is_null($status)) {
             $this->db->where('order_status', $status);
         }
+
+        $this->db->join('jobs', 'jobs.order_id = order.order_id');
+        $this->db->join('konten', 'jobs.job_id = konten.job_id');
         
         return $this->db->get('order')->result();
     }
 
-    function get($id) {
-    	$this->db->where('order_id', $id);
+    function get($id, $customer_id) {
+        $this->db->where('order_id', $id);
+    	$this->db->where('customer_id', $customer_id);
         $this->db->join('customer', 'customer.customer_id = order.pemesan_id');
         $this->db->join('paket', 'paket.paket_id = order.paket_id');
+        
         return $this->db->get('order')->row();
     }
 

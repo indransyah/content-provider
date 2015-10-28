@@ -15,12 +15,18 @@
   <section class="content">
     <div class="row">
       <div class="col-xs-12">
+        <?php if ($this->session->flashdata('success')) : ?>
+        <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('danger')) : ?>
+        <div class="alert alert-danger"><?php echo $this->session->flashdata('danger'); ?></div>
+        <?php endif; ?>
         <div class="box box-solid box-info">
           <div class="box-header">
             <h3 class="box-title">Detail Konten</h3>
           </div><!-- /.box-header -->
           <div class="box-body no-padding">
-            <form role="form">
+            <form role="form" action="<?=base_url('dashboard/konten/detail/'.$konten->konten_id)?>" method="post">
               <table class="table table-hover">
                 <tr>
                   <th></th>
@@ -32,18 +38,18 @@
                 <tr>
                   <td><strong>Konten ID</strong></td>
                   <td><strong>:</strong> </td> 
-                  <td>OR000011119</td>
+                  <td><?=$konten->konten_id?></td>
                   <td><strong>Kreator</strong></td>
-                  <td><strong>:</strong> Mujib</td>
+                  <td><strong>:</strong> <?=$konten->kreator_nama?></td>
                 </tr>
                 <tr>
-                  <td><strong>Date</strong></td>
-                  <td><strong>:</strong></td>
-                  <td> 23-08-2015</td>
+                  <td><strong>Download</strong></td>
+                  <td><strong>:</strong></td> 
+                  <td> <a href="<?=base_url('upload/'.$konten->konten_file)?>"><?=$konten->konten_file?></a> </td>
                   <td><strong>Telefon</strong></td>
-                  <td><strong>:</strong> 085727123456</td>
+                  <td><strong>:</strong> <?=$konten->kreator_telfon?></td>
                 </tr>
-                <tr>
+               <!--  <tr>
                   <td><strong>Paket</strong></td>
                   <td><strong>:</strong></td>
                   <td> A2</td>
@@ -52,29 +58,34 @@
                   <td><strong>Jumlah</strong></td>
                   <td><strong>:</strong></td> 
                   <td>2</td>
-                </tr>
+                </tr> 
                 <tr>
                   <td><strong>Download</strong></td>
                   <td><strong>:</strong></td> 
                   <td> <a href="#"> Link Download</a> </td>
-                </tr>
+                </tr> -->
                 <tr>
                   <td><strong>Keterangan</strong></td>
                   <td><strong>:</strong> </td>
-                  <td> 2Kami menyediakan konten berupa teks untuk solusi atas kebutuhan konten website anda, sehingga anda dapat mengupdate konten website secara berkala dan teratur</td>
+                  <td><?=$konten->konten_keterangan?></td>
+                </tr>
+                <tr>
+                  <td><strong>Status Saat Ini</strong></td>
+                  <td><strong>:</strong> </td>
+                  <td><?=ucwords($konten->konten_status)?></td>
                 </tr>
                 <tr>
                   <td><strong>Komentar</strong></td>
                   <td><strong>:</strong></td> 
-                  <td> <textarea class="form-control" rows="3" placeholder="Komentar..."></textarea> </td>
+                  <td> <?php echo form_error('komentar'); ?><textarea name="komentar" class="form-control" rows="3" placeholder="Komentar..."><?=$konten->konten_komentar?></textarea></td>
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>
                   <td><strong>:</strong></td> 
-                  <td>
-                    <select class="form-control">
-                        <option>Tolak</option>
-                        <option>Terima</option>
+                  <td><?php echo form_error('status'); ?>
+                    <select name="status" class="form-control">
+                        <option value="diterima" <?php if (set_value('status', $konten->konten_status) == 'diterima')  echo 'selected'; ?>>Terima</option>
+                        <option value="ditolak" <?php if (set_value('status', $konten->konten_status) == 'ditolak')  echo 'selected'; ?>>Tolak</option>
                       </select>
                     </td>
                 </tr>
@@ -101,37 +112,37 @@
               <tr>
                 <td><strong>Order ID</strong></td>
                 <td><strong>:</strong></td>
-                <td>OR0000011</td>
+                <td><a href="<?=base_url('dashboard/order/detail/'.$konten->order_id)?>"><?=$konten->order_id?></a></td>
               </tr>
               <tr>
                 <td><strong>Customer</strong></td>
                 <td><strong>:</strong></td>
-                <td>Iqbal</td>
+                <td><?=$konten->customer_nama?></td>
               </tr>
               <tr>
                 <td><strong>Date</strong></td>
                 <td><strong>:</strong></td>
-                <td>05-10-2015</td>
+                <td><?=tanggal($konten->order_date)?></td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td><strong>Paket</strong></td>
                 <td><strong>:</strong></td>
                 <td>A2</td>
-              </tr>
+              </tr> -->
               <tr>
                 <td><strong>Jumlah</strong></td>
                 <td><strong>:</strong></td>
-                <td>2</td>
+                <td><?=$konten->order_jumlah?></td>
               </tr>
               <tr>
                 <td><strong>Keterangan</strong></td>
                 <td><strong>:</strong></td>
-                <td>blalaaababaaalllllllllllaaaaaaaaaa</td>
+                <td><?=$konten->order_keterangan?></td>
               </tr>
               <tr>
                 <td><strong>Total</strong></td>
                 <td><strong>:</strong></td>
-                <td>Rp100000</td>
+                <td><?=rupiah($konten->order_total)?></td>
               </tr>
             </table>
           </div><!-- /.box-body -->

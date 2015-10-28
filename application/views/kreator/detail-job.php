@@ -82,9 +82,26 @@
           <?php if($job->job_status == 'diterima') : ?>
           <div class="box-footer">
             <div class="row">
-              <div class="col-xs-2 pull-right">  
-                progress
-                <a class="btn btn-primary btn-flat" href="<?=base_url('kreator/job/progress/'.$job->job_id) ?>"></i>  Submit</a><!--  atau <a class="btn btn-success btn-flat" href="<?=base_url('kreator/job/progress/'.$job->job_id) ?>"></i> Kirim Konten</a> <i>(jika sudah selesai)</i> -->
+              <div class="col-sm-5 pull-right">  
+                <div class="row">
+                  <form method="post" action="<?=base_url('kreator/job/detail/'.$job->job_id) ?>">
+                  <div class="col-sm-2">
+                    <label for="progress">Progress</label>
+                  </div>
+                  <div class="col-sm-4">
+                    <input type="range" name="progress" min="0" value="<?=set_value('progress', $job->job_progress); ?>" max="100" id="progress" step="1" oninput="outputUpdate(value)" autocomplete="off">
+                  </div>
+                  <div class="col-sm-2">
+                    <output for="progress" id="progressValue"><?=set_value('progress', $job->job_progress); ?>%</output>
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-flat" href="<?=base_url('kreator/job/progress/'.$job->job_id) ?>"></i>  Submit</button>
+                  </div>
+                  </form>
+                </div>
+                <!-- <input type="range" min="0" max="100" value="50" id="fader" step="1" oninput="outputUpdate(value)"> -->
+                <!-- <output for="fader" id="volume">50</output> -->
+                
               </div>
             </div>
             <br>
@@ -138,3 +155,15 @@
     </div><!-- /.row -->
   </section><!-- /.content -->
 </div><!-- /.content-wrapper -->
+<script type="text/javascript">
+function outputUpdate(vol) {
+  document.querySelector('#progressValue').value = vol+"%";
+}
+</script>
+<style type="text/css">
+output[for="progress"] {
+    background: #000 none repeat scroll 0% 0%;
+    color: #FFF;
+    padding: 0.2rem;
+}
+</style>

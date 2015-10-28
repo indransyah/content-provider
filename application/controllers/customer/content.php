@@ -10,12 +10,18 @@ class Content extends CI_Controller {
         if (!$this->session->userdata('customer_logged_in')) {
             redirect('customer/login');
         }
-       // $this->load->model('backend/order_model');
+       $this->load->model('konten_model');
+    }
+
+    public function index() {
+        return redirect('customer/konten/view');
     }
 
     public function view() {
-        
-        $this->template->customer('konten');
+        $data['konten'] = $this->konten_model->getContentByCustomerId($this->session->userdata('customer_id'));
+        // var_dump($data['konten']);
+        // return 'ok';
+        return $this->template->customer('konten', $data);
     }
 
 }

@@ -31,37 +31,37 @@
               <tr>
                 <td><strong>Order ID</strong></td>
                 <td><strong>:</strong> </td> 
-                <td>OR000011119</td>
+                <td><?=$order->order_id?></td>
               </tr>
               <tr>
                 <td><strong>Tanggal</strong></td>
                 <td><strong>:</strong></td>
-                <td> 23-08-2015</td>
+                <td><?=tanggal($order->order_id)?></td>
               </tr>
               <tr>
                 <td><strong>Paket</strong></td>
                 <td><strong>:</strong></td>
-                <td> A2</td>
+                <td><?=$order->paket_nama?></td>
               </tr>
               <tr>
                 <td><strong>Jumlah</strong></td>
                 <td><strong>:</strong></td> 
-                <td>2</td>
+                <td><?=$order->order_jumlah?></td>
               </tr>
               <tr>
                 <td><strong>Keterangan</strong></td>
                 <td><strong>:</strong> </td>
-                <td> 2Kami menyediakan konten berupa teks untuk solusi atas kebutuhan konten website anda, sehingga anda dapat mengupdate konten website secara berkala dan teratur</td>
+                <td><?=$order->order_keterangan?></td>
               </tr>
               <tr>
                 <td><strong>Total</strong></td>
                 <td><strong>:</strong></td> 
-                <td> Rp100000</td>
+                <td><?=rupiah($order->order_total)?></td>
               </tr>
               <tr>
                 <td><strong>Status</strong></td>
                 <td><strong>:</strong></tf> 
-                  <td> Belum Terverifikasi</td>
+                  <td><?=$order->order_status?></td>
                 </tr>
               </table>
             </div><!-- /.box-body -->
@@ -79,32 +79,32 @@
                 <tr>
                   <td><strong>Nama Paket</strong></td>
                   <td><strong>:</strong></td>
-                  <td>Paket A2</td>
+                  <td><?=$order->paket_nama?></td>
                 </tr>
                 <tr>
                   <td><strong>Jenis Konten</strong></td>
                   <td><strong>:</strong></td>
-                  <td>Teks</td>
+                  <td><?=$order->konten_jenis?></td>
                 </tr>
                 <tr>
                   <td><strong>Jumlah Konten</strong></td>
                   <td><strong>:</strong></td>
-                  <td>10</td>
+                  <td><?=$order->paket_jumlah?></td>
                 </tr>
                 <tr>
                   <td><strong>Lama Pengerjaan</strong></td>
                   <td><strong>:</strong></td>
-                  <td>3 Hari</td>
+                  <td><?=$order->paket_jangkawaktu?></td>
                 </tr>
                 <tr>
                   <td><strong>Deskripsi</strong></td>
                   <td><strong>:</strong></td>
-                  <td>Kami menyediakan konten berupa teks untuk solusi atas kebutuhan konten website anda, sehingga anda dapat mengupdate konten website secara berkala dan teratur.</td>
+                  <td><?=$order->paket_deskripsi?></td>
                 </tr>
                 <tr>
                   <td><strong>Harga</strong></td>
                   <td><strong>:</strong></td>
-                  <td>Rp50000</td>
+                  <td><?=rupiah($order->paket_harga)?></td>
                 </tr>
               </table>
             </div><!-- /.box-body -->

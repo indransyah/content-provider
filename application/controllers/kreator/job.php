@@ -23,7 +23,19 @@ class Job extends CI_Controller {
     }
 
     public function detail($id) {
-    	$data['job'] = $this->job_model->get($id, $this->session->userdata('kreator_id'));
+        $data['job'] = $this->job_model->get($id, $this->session->userdata('kreator_id'));
+        if (is_null($id) OR count($data['job'])==0) {
+            $this->session->set_flashdata('danger', 'ID tidak ditemukan');
+            return redirect('kreator/job/view');
+        }
+        if ($this->input->post()) {
+            $dataJob = array(
+                'job_progress' => $this->input->post('progress')
+                );
+            $this->job_model->update($id, $dataJob);
+            $this->session->set_flashdata('success', 'Progress berhasil diperbarui!');
+            return redirect('kreator/job/detail/'.$id);
+        }
     	return $this->template->kreator('detail-job', $data);
     }
 
