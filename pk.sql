@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 19, 2015 at 09:52 AM
--- Server version: 5.6.26
--- PHP Version: 5.6.13
+-- Generation Time: Oct 28, 2015 at 11:29 PM
+-- Server version: 5.6.19-0ubuntu0.14.04.1
+-- PHP Version: 5.6.10-1+deb.sury.org~trusty+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -80,6 +80,26 @@ INSERT INTO `customer` (`customer_id`, `customer_nama`, `customer_telefon`, `cus
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `gaji`
+--
+
+CREATE TABLE `gaji` (
+  `gaji_id` int(11) NOT NULL,
+  `kreator_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  `gaji_jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `gaji`
+--
+
+INSERT INTO `gaji` (`gaji_id`, `kreator_id`, `job_id`, `gaji_jumlah`) VALUES
+(18, 1, 2, 20000);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -87,6 +107,8 @@ CREATE TABLE `jobs` (
   `job_id` int(5) NOT NULL,
   `order_id` int(5) NOT NULL,
   `kreator_id` int(5) NOT NULL,
+  `job_keuntungan` int(3) NOT NULL,
+  `job_progress` int(3) NOT NULL,
   `job_status` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -94,16 +116,18 @@ CREATE TABLE `jobs` (
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`job_id`, `order_id`, `kreator_id`, `job_status`) VALUES
-(2, 2, 1, 'penerimaan');
+INSERT INTO `jobs` (`job_id`, `order_id`, `kreator_id`, `job_keuntungan`, `job_progress`, `job_status`) VALUES
+(2, 2, 1, 10, 100, 'selesai');
 
 --
 -- Triggers `jobs`
 --
 DELIMITER $$
-CREATE TRIGGER `creatorselesaimengerjakan` AFTER UPDATE ON `jobs` FOR EACH ROW BEGIN
+CREATE TRIGGER `jobselesaidikerjakan` AFTER UPDATE ON `jobs` FOR EACH ROW BEGIN
 IF NEW.`job_status` = 'selesai' THEN
-UPDATE `order` SET `order`.`order_status` = 'pengerjaan' WHERE `order`.`order_id` = NEW.`order_id`;
+UPDATE `order` SET `order`.`order_status` = 'selesai' WHERE `order`.`order_id` = NEW.`order_id`;
+INSERT INTO `gaji` VALUES('',NEW.`kreator_id`, NEW.`job_id`, (SELECT `order_total` FROM `order` WHERE `order`.`order_id`=NEW.`order_id`)* (NEW.`job_keuntungan`/100));
+INSERT INTO `pendapatan` VALUES('',NEW.`job_id`, NOW(), (SELECT `order_total` FROM `order` WHERE `order`.`order_id`=NEW.`order_id`)-(SELECT `gaji_jumlah` FROM `gaji` WHERE `gaji`.`job_id`=NEW.`job_id`));
 END IF;
 END
 $$
@@ -123,8 +147,28 @@ CREATE TABLE `konten` (
   `konten_file` varchar(50) NOT NULL,
   `konten_status` varchar(20) NOT NULL,
   `konten_keterangan` text NOT NULL,
+  `konten_komentar` text NOT NULL,
   `job_id` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `konten`
+--
+
+INSERT INTO `konten` (`konten_id`, `konten_nama`, `konten_jenis`, `konten_deskripsi`, `konten_file`, `konten_status`, `konten_keterangan`, `konten_komentar`, `job_id`) VALUES
+(10, 'Artikel', '', '', 'CVku2.doc', 'diterima', 'ds s sdsd', 'Ok', 2);
+
+--
+-- Triggers `konten`
+--
+DELIMITER $$
+CREATE TRIGGER `kontenditerimaadmin` AFTER UPDATE ON `konten` FOR EACH ROW BEGIN
+IF NEW.`konten_status` = 'diterima' THEN
+UPDATE `jobs` SET `jobs`.`job_status` = 'selesai' WHERE `jobs`.`job_id` = NEW.`job_id`;
+END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -172,7 +216,7 @@ CREATE TABLE `order` (
 --
 
 INSERT INTO `order` (`order_id`, `pemesan_id`, `paket_id`, `order_date`, `order_jumlah`, `order_total`, `order_keterangan`, `order_status`) VALUES
-(2, 1, 5, '2015-10-13 00:00:00', 20, 0, 'paket harus bla bla bla', 'pengerjaan'),
+(2, 1, 5, '2015-10-13 00:00:00', 20, 200000, 'paket harus bla bla bla', 'selesai'),
 (4, 1, 7, '2015-10-13 00:00:00', 2, 0, 'bla bla bla', 'pengerjaan'),
 (5, 1, 6, '2015-10-13 00:00:00', 2, 2, 'bla bla bla', 'proses pembayaran'),
 (6, 1, 6, '2015-10-13 00:00:00', 3, 900000, 'ok', 'proses pembayaran');
@@ -237,6 +281,26 @@ END
 $$
 DELIMITER ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pendapatan`
+--
+
+CREATE TABLE `pendapatan` (
+  `pendapatan_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  `pendapatan_tanggal` date NOT NULL,
+  `pendapatan_jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pendapatan`
+--
+
+INSERT INTO `pendapatan` (`pendapatan_id`, `job_id`, `pendapatan_tanggal`, `pendapatan_jumlah`) VALUES
+(3, 2, '2015-10-28', 180000);
+
 --
 -- Indexes for dumped tables
 --
@@ -258,6 +322,14 @@ ALTER TABLE `blog`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`customer_id`);
+
+--
+-- Indexes for table `gaji`
+--
+ALTER TABLE `gaji`
+  ADD PRIMARY KEY (`gaji_id`),
+  ADD KEY `kreator_id` (`kreator_id`),
+  ADD KEY `job_id` (`job_id`);
 
 --
 -- Indexes for table `jobs`
@@ -303,6 +375,13 @@ ALTER TABLE `payment`
   ADD KEY `order_id` (`order_id`);
 
 --
+-- Indexes for table `pendapatan`
+--
+ALTER TABLE `pendapatan`
+  ADD PRIMARY KEY (`pendapatan_id`),
+  ADD KEY `job_id` (`job_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -322,15 +401,20 @@ ALTER TABLE `blog`
 ALTER TABLE `customer`
   MODIFY `customer_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `gaji`
+--
+ALTER TABLE `gaji`
+  MODIFY `gaji_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `konten`
 --
 ALTER TABLE `konten`
-  MODIFY `konten_id` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `konten_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `kreator`
 --
@@ -352,8 +436,20 @@ ALTER TABLE `paket`
 ALTER TABLE `payment`
   MODIFY `payment_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
+-- AUTO_INCREMENT for table `pendapatan`
+--
+ALTER TABLE `pendapatan`
+  MODIFY `pendapatan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `gaji`
+--
+ALTER TABLE `gaji`
+  ADD CONSTRAINT `gaji_ibfk_2` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`),
+  ADD CONSTRAINT `gaji_ibfk_1` FOREIGN KEY (`kreator_id`) REFERENCES `kreator` (`kreator_id`);
 
 --
 -- Constraints for table `jobs`
@@ -380,6 +476,12 @@ ALTER TABLE `order`
 --
 ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order` (`order_id`);
+
+--
+-- Constraints for table `pendapatan`
+--
+ALTER TABLE `pendapatan`
+  ADD CONSTRAINT `pendapatan_ibfk_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`job_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
