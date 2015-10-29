@@ -74,4 +74,20 @@ class Pembayaran extends CI_Controller {
 
     }
 
+    public function delete($id) {
+        // Cek apakah URL terdapat id payment atau tidak
+        if (is_null($id)) {
+            // Jika tidak ada maka redirect ke halaman pembayaran
+            return redirect('dashboard/pembayaran/view');
+        }
+
+        $status = $this->payment_model->delete($id);
+        if (!$status) {
+            $this->session->set_flashdata('danger', 'Pembayaran gagal dihapus.');
+            return redirect('dashboard/pembayaran/view/');
+        }
+        $this->session->set_flashdata('success', 'Pembayaran berhasil dihapus.');
+        return redirect('dashboard/pembayaran/view/');
+    }
+
 }

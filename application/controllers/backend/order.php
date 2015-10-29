@@ -52,4 +52,21 @@ class Order extends CI_Controller {
         $this->template->backend('detail-order', $data);
     }
 
+    public function delete($id) {
+        // Cek ada tidaknya data yang dikirim
+        if (is_null($id)) {
+            // Jika tidak ada data dari submit form, redirect ke halaman "view order"
+            return redirect('dashboard/order/view');
+        }
+
+        $removeable = $this->order_model->removeable($id);
+        if ($removeable) {
+            $this->order_model->delete($id);
+            $this->session->set_flashdata('success', 'Data Order telah dihapus');
+            return redirect('dashboard/order/view');
+        }
+        $this->session->set_flashdata('danger', 'Order tidak dapat dihapus karena memiliki relasi dengan data Job');
+        return redirect('dashboard/order/view');
+    }
+
 }

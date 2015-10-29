@@ -10,6 +10,7 @@ class Paket_model extends CI_Model {
     }
 
     function view() {
+        $this->db->where('paket_terhapus', 0);
         return $this->db->get('paket')->result();
     }
 

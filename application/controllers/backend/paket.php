@@ -178,6 +178,23 @@ class Paket extends CI_Controller {
 
     }
 
+    public function delete($id) {
+        // Cek ada tidaknya data yang dikirim
+        if (is_null($id)) {
+            // Jika tidak ada data dari submit form, redirect ke halaman "view paket"
+            return redirect('dashboard/paket/view');
+        }
+
+        $data = array(
+            'paket_terhapus' => 1
+            );
+        $this->paket_model->update($id, $data);
+
+        // Redirect ke halaman view paket dengan notifikasi
+        $this->session->set_flashdata('success', 'Paket berhasil dihapus.');
+        return redirect('dashboard/paket/view');
+    }
+
     
 
 }

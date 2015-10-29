@@ -28,7 +28,7 @@
                 <div class="btn-group">
                   <select name="paket" class="form-control">
                     <?php foreach ($paket as $value) : ?>
-                    <option value="<?=$value->paket_id ?>"><?=$value->paket_nama.' @ '.$value->paket_harga ?></option>
+                    <option value="<?=$value->paket_id ?>"><?=$value->paket_nama.' @ '.rupiah($value->paket_harga) ?></option>
                     <?php endforeach; ?>
                   </select>
                 </div>

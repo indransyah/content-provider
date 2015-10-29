@@ -69,7 +69,7 @@ class Order extends CI_Controller {
     }
 
     public function view() {
-        $data['order'] = $this->order_model->view($this->session->userdata('customer_id'));
+        $data['order'] = $this->order_model->viewByCustomer($this->session->userdata('customer_id'));
         // var_dump($data['order']);
         // return 'ok';
         return $this->template->customer('order', $data);

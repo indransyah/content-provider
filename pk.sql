@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2015 at 12:07 AM
+-- Generation Time: Oct 29, 2015 at 06:53 AM
 -- Server version: 5.6.19-0ubuntu0.14.04.1
 -- PHP Version: 5.6.10-1+deb.sury.org~trusty+1
 
@@ -78,13 +78,6 @@ CREATE TABLE `gaji` (
   `gaji_jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `gaji`
---
-
-INSERT INTO `gaji` (`gaji_id`, `kreator_id`, `job_id`, `gaji_jumlah`) VALUES
-(18, 1, 2, 20000);
-
 -- --------------------------------------------------------
 
 --
@@ -99,13 +92,6 @@ CREATE TABLE `jobs` (
   `job_progress` int(3) NOT NULL,
   `job_status` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jobs`
---
-
-INSERT INTO `jobs` (`job_id`, `order_id`, `kreator_id`, `job_keuntungan`, `job_progress`, `job_status`) VALUES
-(2, 2, 1, 10, 100, 'selesai');
 
 --
 -- Triggers `jobs`
@@ -138,13 +124,6 @@ CREATE TABLE `konten` (
   `konten_komentar` text NOT NULL,
   `job_id` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `konten`
---
-
-INSERT INTO `konten` (`konten_id`, `konten_nama`, `konten_jenis`, `konten_deskripsi`, `konten_file`, `konten_status`, `konten_keterangan`, `konten_komentar`, `job_id`) VALUES
-(10, 'Artikel', '', '', 'CVku2.doc', 'diterima', 'ds s sdsd', 'Ok', 2);
 
 --
 -- Triggers `konten`
@@ -196,18 +175,9 @@ CREATE TABLE `order` (
   `order_jumlah` int(11) NOT NULL,
   `order_total` int(11) NOT NULL,
   `order_keterangan` text NOT NULL,
-  `order_status` varchar(50) NOT NULL
+  `order_status` varchar(50) NOT NULL,
+  `order_terhapus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order`
---
-
-INSERT INTO `order` (`order_id`, `pemesan_id`, `paket_id`, `order_date`, `order_jumlah`, `order_total`, `order_keterangan`, `order_status`) VALUES
-(2, 1, 5, '2015-10-13 00:00:00', 20, 200000, 'paket harus bla bla bla', 'selesai'),
-(4, 1, 7, '2015-10-13 00:00:00', 2, 0, 'bla bla bla', 'pengerjaan'),
-(5, 1, 6, '2015-10-13 00:00:00', 2, 2, 'bla bla bla', 'proses pembayaran'),
-(6, 1, 6, '2015-10-13 00:00:00', 3, 900000, 'ok', 'proses pembayaran');
 
 -- --------------------------------------------------------
 
@@ -222,18 +192,19 @@ CREATE TABLE `paket` (
   `paket_deskripsi` text NOT NULL,
   `paket_jangkawaktu` varchar(20) NOT NULL,
   `paket_jumlah` varchar(20) NOT NULL,
-  `paket_harga` int(11) NOT NULL
+  `paket_harga` int(11) NOT NULL,
+  `paket_terhapus` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `paket`
 --
 
-INSERT INTO `paket` (`paket_id`, `paket_nama`, `konten_jenis`, `paket_deskripsi`, `paket_jangkawaktu`, `paket_jumlah`, `paket_harga`) VALUES
-(5, 'Paket 1', 'video', 'Ini adalah deskripsi Paket 1', '1 Minggu', '10', 240000),
-(6, 'Paket 2', 'teks', 'Isi deskripsi paket 2', '1 Minggu', '10', 300000),
-(7, 'Paket 3', 'audio', 'Isi deskripsi paket 3', '2 minggu', '20', 300000),
-(8, 'Paket 4', 'audio', 'Isi deskripsi paket 3', '2 minggu', '20', 354000);
+INSERT INTO `paket` (`paket_id`, `paket_nama`, `konten_jenis`, `paket_deskripsi`, `paket_jangkawaktu`, `paket_jumlah`, `paket_harga`, `paket_terhapus`) VALUES
+(5, 'Paket 1', 'video', 'Ini adalah deskripsi Paket 1', '1 Minggu', '10', 240000, 0),
+(6, 'Paket 2', 'teks', 'Isi deskripsi paket 2', '1 Minggu', '10', 300000, 0),
+(7, 'Paket 3', 'audio', 'Isi deskripsi paket 3', '2 minggu', '20', 300000, 1),
+(8, 'Paket 4', 'audio', 'Isi deskripsi paket 3', '2 minggu', '20', 354000, 0);
 
 -- --------------------------------------------------------
 
@@ -249,13 +220,6 @@ CREATE TABLE `payment` (
   `payment_keterangan` text NOT NULL,
   `payment_status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`payment_id`, `order_id`, `payment_date`, `payment_total`, `payment_keterangan`, `payment_status`) VALUES
-(8, 2, '2015-10-14 00:00:00', 100000, 'ke rekening bla bla bla', 'lunas');
 
 --
 -- Triggers `payment`
@@ -281,13 +245,6 @@ CREATE TABLE `pendapatan` (
   `pendapatan_tanggal` date NOT NULL,
   `pendapatan_jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pendapatan`
---
-
-INSERT INTO `pendapatan` (`pendapatan_id`, `job_id`, `pendapatan_tanggal`, `pendapatan_jumlah`) VALUES
-(3, 2, '2015-10-28', 180000);
 
 --
 -- Indexes for dumped tables
@@ -386,7 +343,7 @@ ALTER TABLE `gaji`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `job_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `konten`
 --
@@ -411,7 +368,7 @@ ALTER TABLE `paket`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `payment_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `pendapatan`
 --

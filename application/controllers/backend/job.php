@@ -77,13 +77,27 @@ class Job extends CI_Controller {
     }
 
     public function delete($id) {
-        $status = $this->job_model->delete($id);
-        if (!$status) {
-            $this->session->set_flashdata('danger', 'Job gagal dihapus.');
-            return redirect('dashboard/job/view/');
+        // $status = $this->job_model->delete($id);
+        // if (!$status) {
+        //     $this->session->set_flashdata('danger', 'Job gagal dihapus.');
+        //     return redirect('dashboard/job/view/');
+        // }
+        // $this->session->set_flashdata('success', 'Job berhasil dihapus.');
+        // return redirect('dashboard/job/view/');
+
+        if (is_null($id)) {
+            // Jika tidak ada data dari submit form, redirect ke halaman "view job"
+            return redirect('dashboard/job/view');
         }
-        $this->session->set_flashdata('success', 'Job berhasil dihapus.');
-        return redirect('dashboard/job/view/');
+
+        $removeable = $this->job_model->removeable($id);
+        if ($removeable) {
+            // $this->job_model->delete($id);
+            $this->session->set_flashdata('success', 'Data Job berhasil dihapus');
+            return redirect('dashboard/job/view');
+        }
+        $this->session->set_flashdata('danger', 'Data Job yang sudah selesai dikerjakan tidak dapat dihapus karena memiliki relasi dengan data Gaji dan Pendapatan');
+        return redirect('dashboard/job/view');
     }
 
     public function detail($id) {

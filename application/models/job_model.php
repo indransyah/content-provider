@@ -68,6 +68,15 @@ class Job_model extends CI_Model {
         return $this->db->update('jobs', $data);
     }
 
+    function removeable($id) {
+        $this->db->where('job_id', $id);
+        $job = $this->db->get('jobs')->row();
+        if ($job->job_status!='selesai') {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
     function delete($id) {
         $this->db->where('job_id', $id);
         return $this->db->delete('jobs');

@@ -29,4 +29,9 @@ class Payment_model extends CI_Model {
         return $this->db->update('payment', $data);
     }
 
+    function delete($id) {
+        $this->db->where('payment_id', $id);
+        return $this->db->delete('payment');
+    }
+
 }
