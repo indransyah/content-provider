@@ -61,7 +61,7 @@ class Order extends CI_Controller {
             'order_keterangan' => $this->input->post('keterangan'),
             'order_status' => 'proses pembayaran',
             );
-        $this->payment_model->add($data);
+        $this->order_model->add($data);
         $this->session->set_flashdata('success', 'Order berhasil ditambahkan.');
         return redirect('customer/order/view');
 

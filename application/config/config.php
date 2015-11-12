@@ -16,7 +16,7 @@
 | environments.
 |
 */
-$config['base_url'] = 'http://localhost/pk/';
+$config['base_url'] = 'http://contentprovider.app/';
 
 /*
 |--------------------------------------------------------------------------

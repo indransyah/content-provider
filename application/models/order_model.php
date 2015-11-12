@@ -28,15 +28,17 @@ class Order_model extends CI_Model {
         $this->db->join('customer', 'customer.customer_id = order.pemesan_id');
         $this->db->join('paket', 'paket.paket_id = order.paket_id');
 
-        $this->db->join('jobs', 'jobs.order_id = order.order_id');
-        $this->db->join('konten', 'jobs.job_id = konten.job_id');
+        // $this->db->join('jobs', 'jobs.order_id = order.order_id');
+        // $this->db->join('konten', 'jobs.job_id = konten.job_id');
         
         return $this->db->get('order')->result();
     }
 
-    function get($id, $customer_id) {
+    function get($id, $customer_id = null) {
         $this->db->where('order_id', $id);
-    	$this->db->where('customer_id', $customer_id);
+        if (!is_null($customer_id)) {
+            $this->db->where('customer_id', $customer_id);
+        }
         $this->db->join('customer', 'customer.customer_id = order.pemesan_id');
         $this->db->join('paket', 'paket.paket_id = order.paket_id');
         
